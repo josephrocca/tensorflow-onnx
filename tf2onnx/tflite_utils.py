@@ -482,8 +482,9 @@ def parse_tflite_graph(tflite_g, opcodes_map, model, input_prefix='', tensor_sha
                         output_shapes[out] = None
         if has_prequantized_output:
             output_names = [get_prequant(out) for out in output_names]
-        onnx_node = helper.make_node(optype, input_names, output_names, name=output_names[0], **attr)
-        onnx_nodes.append(onnx_node)
+        if len(output_names) > 0: # to try to hackily work around this error: https://github.com/onnx/tensorflow-onnx/issues/2055
+            onnx_node = helper.make_node(optype, input_names, output_names, name=output_names[0], **attr)
+            onnx_nodes.append(onnx_node)
 
     inputs = [tensor_names[tflite_g.Inputs(i)] for i in range(tflite_g.InputsLength())]
     outputs = [tensor_names[tflite_g.Outputs(i)] for i in range(tflite_g.OutputsLength())]
