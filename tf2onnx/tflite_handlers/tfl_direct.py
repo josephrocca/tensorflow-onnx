@@ -89,6 +89,8 @@ from tf2onnx.handler import tfl_op
 @tfl_op("TFL_COMPLEX_ABS", tf_op="ComplexAbs")
 @tfl_op("TFL_HARD_SWISH", tf_op="HardSwish")
 @tfl_op("TFL_L2_NORMALIZATION", tf_op="L2Normalization")
+@tfl_op("TFL_READ_VARIABLE", tf_op="ReadVariableOp")
+@tfl_op("TFL_VAR_HANDLE", tf_op="VarHandleOp")
 class TflDirectOp:
     @classmethod
     def to_tf(cls, ctx, node, **kwargs):
